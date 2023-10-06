@@ -1,13 +1,21 @@
+using System.Text.Json.Serialization;
 namespace ProvaApi.Models;
-
-using Models.Funcionario
 
 public class Folha
 {
     public int FolhaId { get; set; }
     public float Valor { get; set; }
-    public float QuantHoras { get; set; }
+    public float Quantidade { get; set; }
     public int Mes { get; set; }
     public int Ano { get; set; }
-    public Funcionario FuncionarioId { get; set;}
+    public int FuncionarioId { get; set;}
+    public float Salario_Bruto { get; set; }
+    public float Imposto_Renda { get; set; }
+    public float Inss { get; set; }
+    public float Fgts { get; set; }
+    public float Salario_Liquido { get; set ;}
+
+
+    [JsonIgnore]
+    public Funcionario? Funcionario { get; set; }
 }

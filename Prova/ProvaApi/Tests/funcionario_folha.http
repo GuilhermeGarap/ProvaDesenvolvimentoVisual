@@ -1,4 +1,4 @@
-@base_url = https://localhost:PORTA/api
+@base_url = https://localhost:7159/api
 
 # FUNCIONÁRIO ######################################
 
@@ -7,7 +7,7 @@ POST {{base_url}}/funcionario/cadastrar
 Content-Type: application/json
 
 {
-    "nome": "Seu nome",
+    "nome": "Carlos",
     "cpf" : "12345678912"
 }
 
@@ -21,9 +21,9 @@ POST {{base_url}}/folha/cadastrar
 Content-Type: application/json
 
 {
-    "valor": 50,
-    "quantidade" : 1000,
-    "mes" : 10,
+    "valor": 20,
+    "quantidade" : 160,
+    "mes" : 1,
     "ano" : 2023,
     "funcionarioId" : 1
 }
@@ -32,4 +32,4 @@ Content-Type: application/json
 GET {{base_url}}/folha/listar
 
 ### Obtenção de uma folha
-GET {{base_url}}/folha/buscar/12345678912/10/2023
+GET {{base_url}}/folha/buscar/12345678913/10/2023

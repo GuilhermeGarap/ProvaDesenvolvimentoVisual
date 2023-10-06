@@ -1,32 +1,54 @@
-using Microsoft.AspNetCore.Mvc;
-
-namespace ProvaApi.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+namespace ProvaApi.Controllers
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using ProvaApi.Data;
+    using ProvaApi.Models;
 
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    [ApiController]
+    [Route("api/funcionario")]
+    public class FuncionarioController : ControllerBase
     {
-        _logger = logger;
-    }
-
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
-    {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        private readonly AppDataContext _ctx;
+        public FuncionarioController(AppDataContext context)
         {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+            _ctx = context;
+        }
+
+        // GET: api/funcionario/listar
+        [HttpGet]
+        [Route("listar")]
+        public ActionResult Listar()
+        {
+            try
+            {
+                List<Funcionario> funcionarios = _ctx.Funcionarios.ToList();
+                return funcionarios.Count == 0 ? NotFound() : Ok(funcionarios);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        // POST: api/funcionario/cadastrar
+        [HttpPost]
+        [Route("cadastrar")]
+        public ActionResult Cadastrar([FromBody] Funcionario funcionario)
+        {
+            try
+            {
+                _ctx.Funcionarios.Add(funcionario);
+                _ctx.SaveChanges();
+                return Created("", funcionario);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }
