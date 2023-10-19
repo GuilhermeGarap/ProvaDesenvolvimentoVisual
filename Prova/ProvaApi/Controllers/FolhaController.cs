@@ -48,51 +48,51 @@ public ActionResult Listar()
 }
 
 
-[HttpGet]
-[Route("buscar/{cpf}/{mes}/{ano}")]
-public ActionResult Buscar([FromRoute] string cpf, int mes, int ano)
-{
-    try
-    {
-        // Encontre o funcionário pelo CPF
-        Funcionario funcionario = _ctx.Funcionarios.FirstOrDefault(f => f.Cpf == cpf);
+// [HttpGet]
+// [Route("buscar/{cpf}/{mes}/{ano}")]
+// public ActionResult Buscar([FromRoute] string cpf, int mes, int ano)
+// {
+//     try
+//     {
+//         // Encontre o funcionário pelo CPF
+//         Funcionario funcionario = _ctx.Funcionarios.FirstOrDefault(f => f.Cpf == cpf);
 
-        if (funcionario != null)
-        {
-            // Agora que você tem o funcionário, encontre as folhas de pagamento associadas a ele para o mês e ano especificados
-            Folha folhaCadastrada = _ctx.Folhas.FirstOrDefault(f => f.Mes == mes && f.Ano == ano && f.FuncionarioId == funcionario.FuncionarioId);
+//         if (funcionario != null)
+//         {
+//             // Agora que você tem o funcionário, encontre as folhas de pagamento associadas a ele para o mês e ano especificados
+//             Folha folhaCadastrada = _ctx.Folhas.FirstOrDefault(f => f.Mes == mes && f.Ano == ano && f.FuncionarioId == funcionario.FuncionarioId);
 
-            if (folhaCadastrada != null)
-            {
-                var calculadorFolha = new CalculadorFolha(); // Crie uma instância da classe CalculadorFolha
+//             if (folhaCadastrada != null)
+//             {
+//                 var calculadorFolha = new CalculadorFolha(); // Crie uma instância da classe CalculadorFolha
 
-                // Calcula os valores da folha de pagamento usando a instância de calculadorFolha
-                folhaCadastrada.Salario_Bruto = calculadorFolha.CalcularBruto(folhaCadastrada.Quantidade, folhaCadastrada.Valor);
-                folhaCadastrada.Imposto_Renda = calculadorFolha.CalcularImpostoRenda(folhaCadastrada.Salario_Bruto);
-                folhaCadastrada.Inss = calculadorFolha.CalcularInss(folhaCadastrada.Salario_Bruto);
-                folhaCadastrada.Fgts = calculadorFolha.CalcularFgts(folhaCadastrada.Salario_Bruto);
-                folhaCadastrada.Salario_Liquido = calculadorFolha.CalcularLiquido(folhaCadastrada.Salario_Bruto, folhaCadastrada.Inss, folhaCadastrada.Imposto_Renda);
+//                 // Calcula os valores da folha de pagamento usando a instância de calculadorFolha
+//                 folhaCadastrada.Salario_Bruto = calculadorFolha.CalcularBruto(folhaCadastrada.Quantidade, folhaCadastrada.Valor);
+//                 folhaCadastrada.Imposto_Renda = calculadorFolha.CalcularImpostoRenda(folhaCadastrada.Salario_Bruto);
+//                 folhaCadastrada.Inss = calculadorFolha.CalcularInss(folhaCadastrada.Salario_Bruto);
+//                 folhaCadastrada.Fgts = calculadorFolha.CalcularFgts(folhaCadastrada.Salario_Bruto);
+//                 folhaCadastrada.Salario_Liquido = calculadorFolha.CalcularLiquido(folhaCadastrada.Salario_Bruto, folhaCadastrada.Inss, folhaCadastrada.Imposto_Renda);
 
-                return Ok(folhaCadastrada);
-            }
-        }
+//                 return Ok(folhaCadastrada);
+//             }
+//         }
 
-        return NotFound();
-    }
-    catch (Exception e)
-    {
-        return BadRequest(e.Message);
-    }
-}
+//         return NotFound();
+//     }
+//     catch (Exception e)
+//     {
+//         return BadRequest(e.Message);
+//     }
+// }
 
 
-        return NotFound();
-    }
-    catch (Exception e)
-    {
-        return BadRequest(e.Message);
-    }
-}
+//         return NotFound();
+//     }
+//     catch (Exception e)
+//     {
+//         return BadRequest(e.Message);
+//     }
+// }
 
 
 
